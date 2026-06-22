@@ -3,15 +3,30 @@ import { Search, ShoppingCart, ChevronDown, User } from "lucide-react";
 // import Cart from "./Cart";
 
 const navLinks = [
-  "Home",
-  "Best Sellers",
-  "Gift Ideas",
-  "Games",
-  "PC",
-  "Music",
-  "Books",
-  "Electronics",
-  "Home & Garden",
+  {
+    name: "Home",
+    link: "/",
+  },
+  {
+    name: "Best Sellers",
+    link: "/best-sellers",
+  },
+  {
+    name: "Gift Ideas",
+    link: "/gift-ideas",
+  },
+  {
+    name: "Games",
+    link: "/games",
+  },
+  {
+    name: "PC",
+    link: "/pc",
+  },
+  {
+    name: "Music",
+    link: "/music",
+  },
 ];
 
 export default function Navbar() {
@@ -76,11 +91,11 @@ export default function Navbar() {
       <nav className="flex items-center justify-center gap-8 border-t border-slate-700/50 py-3">
         {navLinks.map((link) => (
           <a
-            key={link}
-            href="#"
+            key={link.name}
+            href={link.link}
             className="text-sm font-medium text-slate-200 hover:text-white"
           >
-            {link}
+            {link.name}
           </a>
         ))}
       </nav>

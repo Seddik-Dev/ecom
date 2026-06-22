@@ -1,7 +1,15 @@
-import React, { useState } from "react";
-import { ChevronRight } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import {
+  ArrowRight,
+  ChevronRight,
+  ShoppingBag,
+  Sparkles,
+  Tag,
+} from "lucide-react";
 import image1 from "../assets/images/image1.webp";
 import image2 from "../assets/images/image2.webp";
+import image3 from "../assets/images/image3.webp";
+import SecondeSection from "./SecondeSection";
 
 const slides = [
   {
@@ -35,101 +43,191 @@ const slides = [
     code: "FOOT24",
     note: "*Offre valable sur une sélection de produits",
     bg: "bg-emerald-300",
-    image: "https://placehold.co/900x520/6ee7b7/1e293b?text=Mondial+de+foot",
-  },
-  {
-    id: "lego",
-    label: "Offre Lego Logitech G",
-    discount: "Cadeau",
-    title: "offert",
-    subtitle: "pour l'achat d'un clavier ou souris Logitech G",
-    code: "LEGOG",
-    note: "*Dans la limite des stocks disponibles",
-    bg: "bg-yellow-300",
-    image: "https://placehold.co/900x520/fde047/1e293b?text=Lego+x+Logitech",
-  },
-  {
-    id: "rtx",
-    label: "Asus RTX Série 50",
-    discount: "-8%",
-    title: "sur les",
-    subtitle: "PC portables Asus RTX série 50",
-    code: "RTX50",
-    note: "*Voir les conditions de l'offre",
-    bg: "bg-sky-300",
-    image: "https://placehold.co/900x520/7dd3fc/1e293b?text=Asus+RTX+50",
-  },
-  {
-    id: "pc-ldlc",
-    label: "PC LDLC",
-    discount: "-5%",
-    title: "sur les",
-    subtitle: "configurations PC LDLC",
-    code: "PCLDLC",
-    note: "*Hors composants en promotion",
-    bg: "bg-indigo-300",
-    image: "https://placehold.co/900x520/a5b4fc/1e293b?text=PC+LDLC",
+    image: image3,
   },
 ];
+
 function Home() {
   const [activeId, setActiveId] = useState(slides[0].id);
-  const active = slides.find((s) => s.id === activeId);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveId((currentId) => {
+        const currentIndex = slides.findIndex(
+          (slide) => slide.id === currentId,
+        );
+
+        const nextIndex = (currentIndex + 1) % slides.length;
+
+        return slides[nextIndex].id;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
-    <div className="container w-full mx-auto bg-gray-100 p-4">
-      {/* Hero content */}
-      <div className="flex overflow-hidden rounded-t-lg">
-        {/* Left text panel */}
-        <div className="flex w-[38%] flex-shrink-0 flex-col justify-center bg-white px-10 py-12">
-          <p className="text-7xl font-extrabold text-slate-900 leading-none">
-            {active.discount}
-            <sup className="text-2xl align-top">*</sup>
-          </p>
+    <section
+      className="container mx-auto w-full  p-4 sm:p-6"
+      aria-label="Promotional hero"
+    >
+      <div className="overflow-hidden rounded-2xl bg-white shadow-xl shadow-slate-300/40 ring-1 ring-slate-200/70">
+        {/* Hero content */}
+        <div className="flex min-h-[560px] flex-col overflow-hidden lg:h-[520px] lg:min-h-0 lg:flex-row">
+          {/* Left text panel */}
+          <div className="relative z-10 flex w-full flex-shrink-0 flex-col justify-center bg-gradient-to-br from-white via-white to-slate-50 px-6 py-10 sm:px-10 sm:py-12 lg:w-[42%] lg:px-12">
+            <div className="pointer-events-none absolute -left-16 top-8 h-40 w-40 rounded-full bg-sky-400/10 blur-3xl" />
+            <div className="pointer-events-none absolute bottom-6 right-4 h-28 w-28 rounded-full bg-slate-900/5 blur-2xl" />
 
-          <p className="mt-6 text-lg text-slate-700">{active.title}</p>
-          <p className="text-xl font-bold text-slate-900">{active.subtitle}</p>
+            <div className="relative min-h-[320px] sm:min-h-[300px] lg:min-h-[340px]">
+              {slides.map((slide) => {
+                const isActive = activeId === slide.id;
 
-          <button
-            type="button"
-            className="mt-6 flex w-fit items-center gap-1 rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-          >
-            avec le code :<span className="font-extrabold">{active.code}</span>
-            <ChevronRight size={16} />
-          </button>
+                return (
+                  <div
+                    key={slide.id}
+                    className={`absolute inset-0 flex flex-col justify-center transition-all duration-500 ease-out ${
+                      isActive
+                        ? "pointer-events-auto translate-y-0 opacity-100"
+                        : "pointer-events-none translate-y-4 opacity-0"
+                    }`}
+                    aria-hidden={!isActive}
+                  >
+                    <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-sky-500/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-sky-700 ring-1 ring-sky-500/20 sm:text-xs">
+                      <Sparkles size={12} className="shrink-0" />
+                      {slide.label}
+                    </span>
 
-          <p className="mt-3 text-xs text-slate-500">{active.note}</p>
+                    <p className="mt-5 text-5xl font-extrabold leading-none tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+                      {slide.discount}
+                      <sup className="align-top text-xl text-slate-400 sm:text-2xl">
+                        *
+                      </sup>
+                    </p>
+
+                    <p className="mt-5 text-base text-slate-600 sm:text-lg">
+                      {slide.title}
+                    </p>
+                    <p className="mt-1 text-lg font-bold text-slate-900 sm:text-xl">
+                      {slide.subtitle}
+                    </p>
+
+                    <div className="mt-7 flex flex-wrap gap-3">
+                      <button
+                        type="button"
+                        className="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl hover:shadow-slate-900/25 active:translate-y-0 sm:px-6 sm:py-3.5"
+                      >
+                        <ShoppingBag
+                          size={16}
+                          className="transition-transform duration-300 group-hover:scale-110"
+                        />
+                        Shop Now
+                      </button>
+
+                      <button
+                        type="button"
+                        className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:shadow-md active:translate-y-0 sm:px-6 sm:py-3.5"
+                      >
+                        Explore Collection
+                        <ArrowRight
+                          size={16}
+                          className="transition-transform duration-300 group-hover:translate-x-1"
+                        />
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="group mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-800 ring-1 ring-slate-200/80 transition-all duration-300 hover:bg-slate-900 hover:text-white hover:ring-slate-900"
+                    >
+                      <Tag
+                        size={14}
+                        className="text-slate-500 transition-colors duration-300 group-hover:text-sky-300"
+                      />
+                      avec le code :
+                      <span className="font-extrabold tracking-wide">
+                        {slide.code}
+                      </span>
+                      <ChevronRight
+                        size={16}
+                        className="transition-transform duration-300 group-hover:translate-x-0.5"
+                      />
+                    </button>
+
+                    <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                      {slide.note}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right image panel */}
+          <div className="relative min-h-[280px] flex-1 overflow-hidden sm:min-h-[320px] lg:min-h-0">
+            {slides.map((slide) => {
+              const isActive = activeId === slide.id;
+
+              return (
+                <div
+                  key={slide.id}
+                  className={`absolute inset-0 transition-opacity duration-500 ease-out ${
+                    isActive ? "opacity-100" : "opacity-0"
+                  }`}
+                  aria-hidden={!isActive}
+                >
+                  <div
+                    className={`absolute inset-0 ${slide.bg} transition-colors duration-500`}
+                  />
+                  <div className="pointer-events-none absolute -right-10 top-10 h-48 w-48 rounded-full bg-white/30 blur-3xl" />
+                  <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-gradient-to-t from-black/25 via-black/5 to-transparent lg:bg-gradient-to-l lg:from-white/40 lg:via-transparent lg:to-transparent" />
+
+                  <img
+                    src={slide.image}
+                    alt={slide.label}
+                    className={`h-full w-full object-cover transition-transform duration-700 ease-out ${
+                      isActive ? "scale-100" : "scale-105"
+                    }`}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Right image panel */}
-        <div className={`flex-1 ${active.bg} transition-colors duration-300`}>
-          <img
-            src={active.image}
-            alt={active.label}
-            className="h-full w-full object-cover"
-          />
+        {/* Tabs */}
+        <div
+          className="flex border-t border-slate-100 bg-slate-50/90"
+          role="tablist"
+          aria-label="Promotional offers"
+        >
+          {slides.map((slide) => {
+            const isActive = activeId === slide.id;
+
+            return (
+              <button
+                key={slide.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveId(slide.id)}
+                className={`relative flex-1 px-3 py-4 text-[10px] font-semibold uppercase tracking-wide transition-all duration-300 sm:px-4 sm:py-5 sm:text-xs ${
+                  isActive
+                    ? "bg-white text-slate-900 shadow-[inset_0_1px_0_0_rgba(255,255,255,1)]"
+                    : "text-slate-500 hover:bg-white/70 hover:text-slate-800"
+                }`}
+              >
+                {isActive && (
+                  <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600" />
+                )}
+                <span className="relative block leading-snug">
+                  {slide.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
-
-      {/* Tabs */}
-      <div className="flex border border-t-0 border-gray-200 bg-white">
-        {slides.map((slide) => (
-          <button
-            key={slide.id}
-            type="button"
-            onClick={() => setActiveId(slide.id)}
-            className={`relative flex-1 px-4 py-4 text-xs font-semibold uppercase tracking-wide transition-colors ${
-              activeId === slide.id
-                ? "bg-sky-500 text-white"
-                : "text-slate-700 hover:bg-gray-50"
-            }`}
-          >
-            {slide.label}
-            {activeId === slide.id && (
-              <span className="absolute -bottom-2 left-1/2 h-0 w-0 -translate-x-1/2 border-x-8 border-t-8 border-x-transparent border-t-sky-500" />
-            )}
-          </button>
-        ))}
-      </div>
-    </div>
+      <SecondeSection/>
+    </section>
   );
 }
 
