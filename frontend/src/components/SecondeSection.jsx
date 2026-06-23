@@ -1,77 +1,62 @@
 import React from "react";
-import {
-  ArrowRight,
-  Laptop,
-  Monitor,
-  Cpu,
-  Tv,
-  Smartphone,
-  Headphones,
-  MemoryStick,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import appleImg from "../assets/images/apple.jpg";
+import pcImg from "../assets/images/pc.jpg";
+import ecranImg from "../assets/images/ecran.jpg";
+import uniteCentraleImg from "../assets/images/unitecentrale.jpg";
+import tvImg from "../assets/images/tv.jpg";
+import phoneImg from "../assets/images/phone.jpg";
+import casqueImg from "../assets/images/casque.jpg";
+import configurateurImg from "../assets/images/configurateur.webp";
 
-// Update these paths to point at your own product images.
-// Each card expects a square-ish image; swap `image` for a real <img src="...">
-// or keep the icon fallback below if no image is provided.
 const categories = [
   {
     id: "apple",
     title: "Apple",
-    image: "/images/categories/macbook-neo.png",
-    badge: { label: "MacBook Neo", price: "699€", prefix: "À partir de" },
-    icon: Laptop,
+    image: appleImg,
   },
   {
     id: "pc-portables",
     title: "PC portables",
-    image: "/images/categories/pc-portables.png",
+    image: pcImg,
     warranty: true,
-    icon: Laptop,
   },
   {
     id: "peripheriques",
     title: "Périphériques",
-    image: "/images/categories/peripheriques.png",
-    icon: Monitor,
+    image: ecranImg,
   },
   {
     id: "pc-ldlc",
     title: "PC LDLC",
-    image: "/images/categories/pc-ldlc.png",
+    image: uniteCentraleImg,
     warranty: true,
-    icon: Cpu,
   },
   {
     id: "tv",
     title: "TV",
-    image: "/images/categories/tv.png",
+    image: tvImg,
     warranty: true,
-    icon: Tv,
   },
   {
     id: "smartphones",
     title: "Smartphones",
-    image: "/images/categories/smartphones.png",
+    image: phoneImg,
     warranty: true,
-    icon: Smartphone,
   },
   {
     id: "son",
     title: "Son",
-    image: "/images/categories/son.png",
-    icon: Headphones,
+    image: casqueImg,
   },
   {
     id: "configurateur-pc",
     title: "Configurateur PC",
-    image: "/images/categories/configurateur-pc.png",
-    icon: MemoryStick,
+    image: configurateurImg,
   },
 ];
 
 function CategoryCard({ category }) {
-  const Icon = category.icon;
-
   return (
     <div className="group flex flex-col items-center rounded-2xl bg-white px-6 pt-8 pb-6 shadow-sm transition-shadow hover:shadow-md">
       <h3 className="mb-5 text-base font-medium text-slate-600">
@@ -83,7 +68,6 @@ function CategoryCard({ category }) {
         {category.badge && (
           <div className="absolute left-0 top-0 text-left">
             <p className="flex items-center gap-1 text-sm font-semibold text-slate-800">
-              <span className="text-base"></span>
               {category.badge.label}
             </p>
             <p className="text-xs text-slate-500">
@@ -104,25 +88,11 @@ function CategoryCard({ category }) {
           </div>
         )}
 
-        {category.image ? (
-          <img
-            src={category.image}
-            alt={category.title}
-            className="h-full w-auto object-contain"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-              e.currentTarget.nextSibling.style.display = "flex";
-            }}
-          />
-        ) : null}
-
-        {/* Fallback icon, shown if no image / image fails to load */}
-        <div
-          className="hidden h-full w-full items-center justify-center text-slate-300"
-          style={{ display: category.image ? "none" : "flex" }}
-        >
-          <Icon className="h-16 w-16" strokeWidth={1.25} />
-        </div>
+        <img
+          src={category.image}
+          alt={category.title}
+          className="h-full w-auto object-contain"
+        />
       </div>
 
       <button
