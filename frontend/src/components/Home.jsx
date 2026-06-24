@@ -11,6 +11,7 @@ import image2 from "../assets/images/image2.webp";
 import image3 from "../assets/images/image3.webp";
 import SecondeSection from "./SecondeSection";
 import Thirdsection from "./ThirdSection";
+import FourthSection from "./FourthSection";
 
 const slides = [
   {
@@ -67,10 +68,10 @@ function Home() {
   }, []);
   return (
     <section
-      className="container mx-auto w-full  p-4 sm:p-6"
+      className="container mx-auto w-full p-4 sm:p-6"
       aria-label="Promotional hero"
     >
-      <div className="overflow-hidden rounded-2xl bg-white shadow-xl shadow-slate-300/40 ring-1 ring-slate-200/70">
+      <div className="overflow-hidden rounded-2xl shadow-xl shadow-slate-300/40 ring-1 ring-slate-200/70">
         {/* Hero content */}
         <div className="flex min-h-[560px] flex-col overflow-hidden lg:h-[520px] lg:min-h-0 lg:flex-row">
           {/* Left text panel */}
@@ -229,6 +230,7 @@ function Home() {
       </div>
       <SecondeSection/>
       <Thirdsection/>
+      <FourthSection/>
     </section>
   );
 }
