@@ -2,7 +2,7 @@ import api from "../api/axios";
 
 export const login = async (data) => {
   await api.get("/api/csrf-cookie");
-
+  
   return api.post("/api/login", data);
 };
 

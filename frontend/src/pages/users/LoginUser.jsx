@@ -1,9 +1,9 @@
-import React, { useState ,useNavigate } from "react";
+import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { FaFacebookF, FaTwitter, FaGithub, FaGoogle } from "react-icons/fa";
 
-import characterImg from "../../assets/images/character.png";
-import { getAdmin, login } from "../../services/authServiceAdmin";
+import onlineshop from "../../assets/images/onlineshop.png";
+import { getUser, login } from "../../services/authServiceUser";
 
 const socialProviders = [
   { icon: FaFacebookF, label: "Facebook", color: "text-blue-600" },
@@ -12,8 +12,7 @@ const socialProviders = [
   { icon: FaGoogle, label: "Google", color: "text-red-500" },
 ];
 
-export default function LoginAdmin() {
-  const navigate =useNavigate();
+export default function LoginUser() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [form, setForm] = useState({
@@ -29,16 +28,11 @@ export default function LoginAdmin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login({ ...form, remember: rememberMe });
-
-      const response = await getAdmin();
-
-      navigate()
-
+      await login(form);
+      const response = await getUser();
+      console.log(response.data);
     } catch (error) {
-
       console.log(error);
-
     }
   };
 
@@ -62,7 +56,7 @@ export default function LoginAdmin() {
 
         {/* Personnage */}
         <img
-          src={characterImg}
+          src={onlineshop}
           alt="Illustration"
           className="relative z-10 mx-auto mt-50 h-[520px] w-auto object-contain"
         />

@@ -27,7 +27,4 @@ class AuthController extends Controller
             'message' => 'Connected'
         ]);
     }
-    public function users(){
-        return 'ttttt';
-    }
 }
