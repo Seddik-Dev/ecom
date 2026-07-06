@@ -1,9 +1,11 @@
-import React, { useState ,useNavigate } from "react";
+import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { FaFacebookF, FaTwitter, FaGithub, FaGoogle } from "react-icons/fa";
 
 import characterImg from "../../assets/images/character.png";
 import { getAdmin, login } from "../../services/authServiceAdmin";
+import { ROUTES } from "../../router/routes";
+import { useNavigate } from "react-router-dom";
 
 const socialProviders = [
   { icon: FaFacebookF, label: "Facebook", color: "text-blue-600" },
@@ -33,7 +35,7 @@ export default function LoginAdmin() {
 
       const response = await getAdmin();
 
-      navigate()
+      navigate(ROUTES.ADMIN.DASHBOARD_ADMIN)
 
     } catch (error) {
 

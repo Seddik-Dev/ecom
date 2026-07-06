@@ -1,9 +1,9 @@
 import api from "../api/axios";
 
 export const login = async (data) => {
-  await api.get("/api/csrf-cookie");
+  await api.get("/csrf-cookie");
 
-  return api.post("/api/admin/login", {
+  return api.post("/admin/login", {
     email: data.email,
     password: data.password,
     remember: Boolean(data.remember),
@@ -11,9 +11,9 @@ export const login = async (data) => {
 };
 
 export const logout = async () => {
-  return api.post("/api/admin/logout");
+  return api.post("/admin/logout");
 };
 
 export const getAdmin = async () => {
-  return api.get("/api/admin/user");
+  return api.get("/admin/user");
 };

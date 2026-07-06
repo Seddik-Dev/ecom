@@ -6,6 +6,10 @@ import AuthLayout from "../layouts/AuthLayout";
 import LayoutAdmin from "../layouts/LayoutAdmin";
 import LoginUser from "../pages/users/LoginUser";
 import Admindashboard from "../pages/admin/Admindashboard";
+import LoginAdmin from "../pages/admin/LoginAdmin";
+import ProductsListAdmin from "../pages/admin/products/ProductsListAdmin";
+import CategoryListAdmin from "../pages/admin/category/CategoryListAdmin";
+
 export const router = createBrowserRouter([
   {
     element: <MainLayout />,
@@ -33,7 +37,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.ADMIN.LOGIN_ADMIN,
-        element: <LoginUser />,
+        element: <LoginAdmin />,
       },
     ],
   },
@@ -44,6 +48,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.ADMIN.DASHBOARD_ADMIN,
         element: <Admindashboard />,
+      },
+      {
+        path: ROUTES.ADMIN.PRODUCTS_LIST_ADMIN,
+        element: <ProductsListAdmin />,
+      },
+      {
+        path: ROUTES.ADMIN.CATEGORY_LIST_ADMIN,
+        element: <CategoryListAdmin />,
       },
     ],
   },
