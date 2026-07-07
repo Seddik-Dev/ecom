@@ -31,7 +31,7 @@ export default function AdminSideBar({ open = true, onCloseMobile }) {
           ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
       >
         {/* Logo + toggle pin */}
-        <div className="flex items-center justify-between h-16 px-5 shrink-0">
+        <div className="flex items-center justify-between h-16 px-5 shrink-0 dark:bg-zinc-900">
           <div className="flex items-center gap-2 overflow-hidden">
             <svg
               width="26"
@@ -43,7 +43,7 @@ export default function AdminSideBar({ open = true, onCloseMobile }) {
               <path d="M12 2L2 9l10 13 10-13-10-7z" fill="#7367F0" />
             </svg>
             {expanded && (
-              <span className="font-semibold text-lg text-gray-800 whitespace-nowrap">
+              <span className="font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-white">
                 Vuexy
               </span>
             )}
@@ -63,7 +63,7 @@ export default function AdminSideBar({ open = true, onCloseMobile }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden px-3 pb-6">
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden px-3 pb-6 dark:bg-zinc-900">
           {NAV_SECTIONS.map((section, i) => (
             <div key={i} className="mb-2">
               {section.title && expanded && (
@@ -87,8 +87,8 @@ export default function AdminSideBar({ open = true, onCloseMobile }) {
                         className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors cursor-pointer
                           ${
                             activeItem === item.path
-                              ? "bg-violet-500 text-white shadow-sm shadow-violet-200"
-                              : "text-gray-600 hover:bg-gray-100"
+                              ? "bg-violet-500 text-white shadow-sm shadow-violet-200 dark:bg-violet-500 dark:shadow-violet-200"
+                              : "text-gray-600 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-800"
                           }
                           ${!expanded ? "justify-center" : ""}`}
                       >

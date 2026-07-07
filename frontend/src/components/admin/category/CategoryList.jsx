@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getAllCategories } from "../../../services/Admin/categoryApi";
+import AddModalCategory from "./AddModalCategory";
 import {
   ChevronDown,
   Plus,
@@ -18,25 +19,29 @@ export default function CategoryList() {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(1);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const fetchCategories = useCallback(async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await getAllCategories();
+
+      if (response.success) {
+        setCategories(response.data);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch categories.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await getAllCategories();
-
-        if (response.success) {
-          setCategories(response.data);
-        }
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch categories.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCategories();
-  }, []);
+  }, [fetchCategories]);
 
   const perPage = 7;
   const filtered = categories.filter((c) =>
@@ -75,7 +80,11 @@ export default function CategoryList() {
             <button className="flex items-center gap-1 px-3 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-600">
               {perPage} <ChevronDown size={14} />
             </button>
-            <button className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-violet-500 text-white text-sm font-medium hover:bg-violet-600 transition-colors">
+            <button
+              type="button"
+              onClick={() => setIsAddModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-violet-500 text-white text-sm font-medium hover:bg-violet-600 transition-colors"
+            >
               <Plus size={16} /> Add Category
             </button>
           </div>
@@ -137,17 +146,23 @@ export default function CategoryList() {
                   </td>
                   <td className="px-3 py-4">
                     <div className="flex items-center gap-3">
-                      <img
-                        src={c.image}
-                        alt={c.name}
-                        className="w-10 h-10 rounded-lg object-cover bg-gray-100"
-                      />
+                      {c.image ? (
+                        <img
+                          src={c.image}
+                          alt={c.name}
+                          className="w-10 h-10 rounded-lg object-cover bg-gray-100"
+                        />
+                      ) : (
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 text-xs font-semibold text-violet-500">
+                          {c.name?.charAt(0)?.toUpperCase()}
+                        </div>
+                      )}
                       <div className="min-w-0">
                         <p className="font-medium text-gray-800 truncate">
                           {c.name}
                         </p>
                         <p className="text-xs text-gray-400 truncate max-w-[360px]">
-                          {c.desc}
+                          {c.description}
                         </p>
                       </div>
                     </div>
@@ -225,6 +240,12 @@ export default function CategoryList() {
           </div>
         </div>
       </div>
+
+      <AddModalCategory
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSuccess={fetchCategories}
+      />
     </div>
   );
 }

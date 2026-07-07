@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $guarded = [];
     protected $table = 'categories';
+
+    protected $fillable = [
+        'name',
+        'description',
+        'image',
+        'status',
+        'created_by',
+        'updated_by',
+    ];
 }

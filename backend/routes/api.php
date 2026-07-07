@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AdminAuthController;
 use App\Http\Controllers\Api\Admin\Categorycontroller;
+use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\AuthController;
 
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,9 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/user', [AdminAuthController::class, 'user']);
     Route::post('/logout', [AdminAuthController::class, 'logout']);
     Route::get('/getAllCategories', [Categorycontroller::class, 'getAllCategories']);
+    Route::post('/categories', [Categorycontroller::class, 'store']);
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::post('/products', [ProductController::class, 'store']);
 });
 
 
