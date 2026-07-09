@@ -76,6 +76,7 @@ export default function ProductlistComp({
 
   useEffect(() => {
     setPage(1);
+    console.log(products);
   }, [products]);
 
   const totalEntries = products.length;
@@ -197,7 +198,7 @@ export default function ProductlistComp({
                     </td>
                     <td className="px-3 py-4 text-gray-500">{product.qty}</td>
                     <td className="px-3 py-4">
-                      <StatusBadge status={product.status} />
+                      <StatusBadge status={product.status === "Publish" ? "Active" : "Inactive"} />
                     </td>
                     <td className="px-3 py-4">
                       <div className="flex items-center gap-1 text-gray-400">

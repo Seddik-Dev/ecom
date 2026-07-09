@@ -12,6 +12,21 @@ export default function AdminSideBar({ open = true, onCloseMobile }) {
   const navigate = useNavigate();
   const expanded = pinned || hovered;
 
+  const handleMouseEnter = () => {
+    if (!pinned) setHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (!pinned) setHovered(false);
+  };
+
+  const togglePin = () => {
+    setPinned((prev) => {
+      if (prev) setHovered(false);
+      return !prev;
+    });
+  };
+
   return (
     <>
       {/* overlay mobile */}
@@ -23,15 +38,30 @@ export default function AdminSideBar({ open = true, onCloseMobile }) {
       )}
 
       <aside
-        onMouseEnter={() => !pinned && setHovered(true)}
-        onMouseLeave={() => !pinned && setHovered(false)}
-        className={`fixed lg:sticky top-0 h-screen bg-white border-r border-gray-200 z-40
-          transition-all duration-300 ease-in-out flex flex-col
-          ${expanded ? "w-[260px]" : "w-[80px]"}
-          ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className={`
+          fixed lg:static
+          top-0 left-0
+          z-40
+          flex h-screen shrink-0 flex-col
+          overflow-hidden
+          border-r border-gray-200
+          bg-white
+          transition-all duration-300
+          dark:border-zinc-800 dark:bg-zinc-900
+          lg:h-full
+          w-[260px]
+          ${expanded ? "lg:w-[260px]" : "lg:w-[80px]"}
+          ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        `}
       >
         {/* Logo + toggle pin */}
-        <div className="flex items-center justify-between h-16 px-5 shrink-0 dark:bg-zinc-900">
+        <div
+          className={`relative flex h-16 shrink-0 items-center px-5 ${
+            expanded ? "justify-between" : "justify-center"
+          }`}
+        >
           <div className="flex items-center gap-2 overflow-hidden">
             <svg
               width="26"
@@ -43,15 +73,16 @@ export default function AdminSideBar({ open = true, onCloseMobile }) {
               <path d="M12 2L2 9l10 13 10-13-10-7z" fill="#7367F0" />
             </svg>
             {expanded && (
-              <span className="font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-white">
-                Vuexy
+              <span className="whitespace-nowrap text-lg font-semibold text-gray-800 dark:text-white">
+                Ecommerce
               </span>
             )}
           </div>
           {expanded && (
             <button
-              onClick={() => setPinned((p) => !p)}
-              className="p-1 rounded-full text-gray-400 hover:bg-gray-100 hover:text-violet-500 transition-colors shrink-0"
+              type="button"
+              onClick={togglePin}
+              className="shrink-0 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-violet-500 dark:hover:bg-zinc-800"
               title={pinned ? "Unpin sidebar" : "Pin sidebar"}
             >
               <Circle
@@ -63,7 +94,7 @@ export default function AdminSideBar({ open = true, onCloseMobile }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden px-3 pb-6 dark:bg-zinc-900">
+        <nav className="flex-1 min-h-0 overflow-x-hidden overflow-y-auto px-3 pb-6 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {NAV_SECTIONS.map((section, i) => (
             <div key={i} className="mb-2">
               {section.title && expanded && (

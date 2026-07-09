@@ -15,7 +15,7 @@ const mapProduct = (product) => ({
   sku: product.id,
   price: product.price,
   qty: product.stock,
-  status: product.status === "active" ? "Publish" : "Inactive",
+  status: product.status,
 });
 
 export default function Productslist() {
