@@ -69,7 +69,7 @@ ecommerce/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/ecommerce.git
+git clone https://github.com/Seddik-Dev/ecommerce.git
 
 cd ecommerce
 ```
