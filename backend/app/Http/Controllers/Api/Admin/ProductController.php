@@ -9,6 +9,20 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function getLatestProducts()
+    {
+        $products = Product::with('category:id,name')
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Latest products fetched successfully',
+            'data' => $products,
+        ]);
+    }
+    
     public function index()
     {
         $products = Product::with('category:id,name')

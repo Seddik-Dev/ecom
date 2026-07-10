@@ -1,34 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
-
-import xiaomiImg from "../assets/images/xiaomi-tv-stick.jpg";
-import zyxelImg from "../assets/images/zyxel-nwa50be.jpg";
-import booxImg from "../assets/images/boox-tab-xc.jpg";
-import lgImg from "../assets/images/lg-ultragear.jpg";
-import msiImg from "../assets/images/msi-titan.jpg";
-import fiioImg from "../assets/images/fiio-tt13.jpg";
-import anbernicImg from "../assets/images/anbernic-rg-vita.jpg";
-import denonImg from "../assets/images/denon-avr.jpg";
-import ruarkImg from "../assets/images/ruark-audio.jpg";
-import museImg from "../assets/images/muse-m1988.jpg";
-import xrealImg from "../assets/images/xreal-one-pro.jpg";
-import epsonImg from "../assets/images/epson-xp980.jpg";
-
-const products = [
-  { id: 1, name: "Xiaomi TV Stick HD 2nd Gen", image: xiaomiImg },
-  { id: 2, name: "ZyXEL NWA50BE PRO", image: zyxelImg },
-  { id: 3, name: "Boox Tab XC", image: booxImg },
-  { id: 4, name: 'LG 51.6" LED - UltraGear 52G930B-B', image: lgImg },
-  {id: 5,name: "MSI Titan 18 HX Dragon Edition Draco Epic A2WJ-",image: msiImg},
-  { id: 6, name: "FiiO TT13 BT Argent", image: fiioImg },
-  { id: 7, name: "Anbernic RG vita Pro 128 GB (Noir)", image: anbernicImg },
-  { id: 8, name: "Denon AVR-X2900H DAB", image: denonImg },
-  { id: 9, name: "Ruark Audio R410 Mid Grey", image: ruarkImg },
-  { id: 10, name: "Muse M-1988 DJ", image: museImg },
-  { id: 11, name: "XREAL One Pro (M)", image: xrealImg },
-  { id: 12, name: "Epson Expression Photo XP-980", image: epsonImg },
-];
-
+import { getLatestProducts } from "../services/Admin/productApi";
 function ProductCard({ product }) {
   return (
     <div className="flex flex-col items-center border-b border-r border-slate-200 px-4 py-6 text-center">
@@ -43,6 +15,15 @@ function ProductCard({ product }) {
 }
 
 export default function FourthSection() {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getLatestProducts();
+      console.log(data);
+      setProducts(data.data);
+    };
+    fetchProducts();
+  }, []);
   return (
     <section className="mx-auto max-w-7xl bg-white rounded-2xl">
       {/* En-tête */}

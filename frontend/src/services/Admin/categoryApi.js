@@ -1,7 +1,12 @@
 import api from "../../api/axios";
 
+export const getPopularCategories = async () => {
+  const { data } = await api.get("/categories");
+  return data;
+};
+
 export const getAllCategories = async () => {
-  const { data } = await api.get("/admin/getAllCategories");
+  const { data } = await api.get("/getAllCategories");
   return data;
 };
 

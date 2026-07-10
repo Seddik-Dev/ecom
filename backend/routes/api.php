@@ -4,8 +4,19 @@ use App\Http\Controllers\Api\Admin\AdminAuthController;
 use App\Http\Controllers\Api\Admin\Categorycontroller;
 use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\AuthController;
-
 use Illuminate\Support\Facades\Route;
+
+
+
+// =============================== Public Routes ==========================================
+Route::get('/categories', [Categorycontroller::class, 'index']);
+Route::get('/getAllCategories', [Categorycontroller::class, 'getAllCategories']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/latest-products', [ProductController::class, 'getLatestProducts']);
+
+
+
+
 // =============================== Admin ==========================================
 Route::post('/admin/login', [AdminAuthController::class, 'login'])
     ->middleware('throttle:6,1');
@@ -13,22 +24,17 @@ Route::post('/admin/login', [AdminAuthController::class, 'login'])
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/user', [AdminAuthController::class, 'user']);
     Route::post('/logout', [AdminAuthController::class, 'logout']);
-    Route::get('/getAllCategories', [Categorycontroller::class, 'getAllCategories']);
     Route::post('/categories', [Categorycontroller::class, 'store']);
-    Route::get('/products', [ProductController::class, 'index']);
     Route::post('/products', [ProductController::class, 'store']);
 });
 
 
 
 
-// =============================== End Admin ==========================================
-
-
 // =============================== User ==========================================
-Route::post('/login', [AuthController::class,'login']);
-Route::post('/register', [AuthController::class,'register']);
-Route::post('/logout', [AuthController::class,'logout'])
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth:sanctum');
-Route::get('/users', [AuthController::class,'users'])
+Route::get('/users', [AuthController::class, 'users'])
     ->middleware('auth:sanctum');

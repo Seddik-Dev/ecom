@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Storage;
 
 class Categorycontroller extends Controller
 {
+    public function index()
+    {
+        $categories = Category::latest()->take(8)->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Popular categories fetched successfully',
+            'data' => $categories,
+        ]);
+    }
     public function getAllCategories()
     {
         $categories = Category::latest()->get();

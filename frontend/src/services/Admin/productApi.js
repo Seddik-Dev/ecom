@@ -5,6 +5,11 @@ export const getAllProducts = async () => {
   return data;
 };
 
+export const getLatestProducts = async () => {
+  const { data } = await api.get("/latest-products");
+  return data;
+};
+
 export const createProduct = async (payload) => {
   const formData = new FormData();
   formData.append("name", payload.name);
